@@ -4,7 +4,7 @@
 // @match       *://newtoki*.com/*
 // @include     /^https?:\/\/newtoki\d*.com\/.*/
 // @grant       none
-// @version     1.1.2
+// @version     1.1.3
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -30,23 +30,27 @@
       });
   }
 
+  function removeLiElements(list) {
+    list.forEach((dt) => {
+      const liElements = document.querySelectorAll("li");
+      liElements.forEach((li) => {
+        const dateTitle = li.getAttribute("date-title");
+        if (dateTitle === dt) {
+          li.remove();
+        }
+      });
+    });
+  }
+
   const domain = window.location.hostname;
   if (/^newtoki\d+\.com$/.test(domain)) {
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
-      console.log(ulElement);
+      let remove = [];
       getList(
         "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt"
       ).then((result) => {
-        result.forEach((dt) => {
-          const liElements = ulElement.querySelectorAll("li");
-          liElements.forEach((li) => {
-            const dateTitle = li.getAttribute("date-title");
-            if (dateTitle === dt) {
-              li.remove();
-            }
-          });
-        });
+        removeLiElements(result);
       });
     }
   }
