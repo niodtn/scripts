@@ -2,7 +2,7 @@
 // @name        Toki autoHide
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
-// @include     /^https?:\/\/newtoki\d*.com\/.*/
+// @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
 // @version     1.1.3
 // @author      Niodtn
@@ -46,7 +46,6 @@
   if (/^newtoki\d+\.com$/.test(domain)) {
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
-      let remove = [];
       getList(
         "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt"
       ).then((result) => {
