@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        Toki autoHide
-// @namespace   Violentmonkey Scripts
+// @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
 // @grant       none
-// @version     1.0
+// @version     1.0.1
 // @author      Niodtn
-// @description 1/19/2025, 9:41:47 PM
+// @description Personal Tampermonkey script to filter content on newtoki.com
 // ==/UserScript==
 
 (function() {
