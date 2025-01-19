@@ -49,9 +49,9 @@
   if (/^newtoki\d+\.com$/.test(domain)) {
     const CN =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
-    const etc = 
+    const etc =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/dev/toki/newtoki/etc.txt";
-    
+
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
       getList(CN).then((result) => {
@@ -61,5 +61,11 @@
         removeLiElementsFromNewtoki(result);
       });
     }
+
+    let elements = document.querySelectorAll(".list-item");
+    elements.forEach(function (element) {
+      element.style.marginRight = "5px";
+      element.style.marginBottom = "5px";
+    });
   }
 })();
