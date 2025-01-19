@@ -3,7 +3,7 @@
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
 // @grant       none
-// @version     1.0.7
+// @version     1.1.0
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at document-end
@@ -13,19 +13,18 @@
   "use strict";
 
   function getList(url) {
-    fetch(url)
+    return fetch(url)
       .then((response) => response.text())
       .then((data) => {
         const remove = data
           .split("\n")
           .map((line) => line.trim())
           .filter(Boolean);
+        return remove;
       })
       .catch((error) => {
         console.error("Niodtn/Toki: ", error);
       });
-
-    return remove;
   }
 
   const domain = window.location.hostname;
@@ -33,19 +32,21 @@
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
       console.log(ulElement);
-      let remove = getList(
+      getList(
         "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/dev/toki/newtoki/CN.txt"
-      );
-      remove.forEach((dt) => {
-        const liElements = ulElement.querySelectorAll("li");
-
-        liElements.forEach((li) => {
-          const dateTitle = li.getAttribute("date-title");
-          if (dateTitle === dt) {
-            li.remove();
-          }
+      ).then((result) => {
+        result.forEach((dt) => {
+          const liElements = ulElement.querySelectorAll("li");
+          liElements.forEach((li) => {
+            const dateTitle = li.getAttribute("date-title");
+            if (dateTitle === dt) {
+              li.remove();
+            }
+          });
         });
       });
     }
+  }
+})();
   }
 })();
