@@ -3,7 +3,7 @@
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
 // @grant       none
-// @version     1.0.2
+// @version     1.0.3
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // ==/UserScript==
@@ -19,7 +19,7 @@
     fetch(url)
       .then(response => response.text())
       .then(data => {
-        const remove = data.split('\n').map(line => line.trim()).filter(boolean);
+        const remove = data.split('\n').map(line => line.trim());
 
         remove.forEach(test => {
           console.log(text);
