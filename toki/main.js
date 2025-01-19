@@ -22,7 +22,7 @@
         const remove = data.split('\n').map(line => line.trim());
 
         remove.forEach(test => {
-          console.log(text);
+          console.log(test);
         });
       })
       .catch(error => {
