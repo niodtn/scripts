@@ -18,23 +18,20 @@
     const ulElement = document.querySelector('#w-list ul');
     if (ulElement) {
       const liElements = ulElement.querySelectorAll('li');
-    }
+      const url = 'https://raw.githubusercontent.com/niodtn/scripts/refs/heads/dev/toki/newtoki/CN.txt';
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          const remove = data.split('\n').map(line => line.trim());
+          // data.split('\n').map(line => line.trim()).filter(Boolean);
 
-    const url = 'https://raw.githubusercontent.com/niodtn/scripts/refs/heads/dev/toki/newtoki/CN.txt';
-    fetch(url)
-      .then(response => response.text())
-      .then(data => {
-        const remove = data.split('\n').map(line => line.trim());
-        // data.split('\n').map(line => line.trim()).filter(Boolean);
-
-        remove.forEach(test => {
-          console.log(test);
+          remove.forEach(test => {
+            console.log(test);
+          });
+        })
+        .catch(error => {
+          console.error("Niodtn/Toki: ", error);
         });
-        
-        
-      })
-      .catch(error => {
-        console.error("Niodtn/Toki: ", error);
-      });
+    }
   }
 })();
