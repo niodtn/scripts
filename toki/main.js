@@ -22,7 +22,9 @@
         const remove = data
           .split("\n")
           .map((line) => line.trim())
+          .filter((item) => !item.startsWith("# "))
           .filter(Boolean);
+
         return remove;
       })
       .catch((error) => {
@@ -30,9 +32,10 @@
       });
   }
 
-  function removeLiElements(list) {
+  function removeLiElementsFromNewtoki(list) {
     list.forEach((dt) => {
-      const liElements = document.querySelectorAll("li");
+      const ulElement = document.querySelector("#webtoon-list-all");
+      const liElements = ulElement.querySelectorAll("li");
       liElements.forEach((li) => {
         const dateTitle = li.getAttribute("date-title");
         if (dateTitle === dt) {
@@ -44,12 +47,12 @@
 
   const domain = window.location.hostname;
   if (/^newtoki\d+\.com$/.test(domain)) {
+    const CN =
+      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
-      getList(
-        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt"
-      ).then((result) => {
-        removeLiElements(result);
+      getList(CN).then((result) => {
+        removeLiElementsFromNewtoki(result);
       });
     }
   }
