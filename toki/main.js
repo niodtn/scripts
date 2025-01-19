@@ -20,6 +20,7 @@
       .then(response => response.text())
       .then(data => {
         const remove = data.split('\n').map(line => line.trim());
+        // data.split('\n').map(line => line.trim()).filter(Boolean);
 
         remove.forEach(test => {
           console.log(test);
