@@ -3,7 +3,7 @@
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
 // @grant       none
-// @version     1.1.0
+// @version     1.1.1
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at document-end
@@ -33,7 +33,7 @@
     if (ulElement) {
       console.log(ulElement);
       getList(
-        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/dev/toki/newtoki/CN.txt"
+        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt"
       ).then((result) => {
         result.forEach((dt) => {
           const liElements = ulElement.querySelectorAll("li");
