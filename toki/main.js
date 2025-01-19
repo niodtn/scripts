@@ -2,9 +2,10 @@
 // @name        Toki autoHide
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
+// @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.1.3
+// @version     1.2.0
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -62,6 +63,12 @@
       });
     }
 
+    let elements = document.querySelectorAll(".list-item");
+    elements.forEach(function (element) {
+      element.style.marginRight = "5px";
+      element.style.marginBottom = "5px";
+    });
+  } else if (/^booktoki\d+\.com$/.test(domain)) {
     let elements = document.querySelectorAll(".list-item");
     elements.forEach(function (element) {
       element.style.marginRight = "5px";
