@@ -3,7 +3,7 @@
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
 // @grant       none
-// @version     1.0.5
+// @version     1.0.6
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // ==/UserScript==
@@ -15,7 +15,7 @@
   if (/^newtoki\d+\.com$/.test(domain)) {
     console.log("test");
     document.addEventListener("DOMContentLoaded", () => {
-      const ulElement = document.querySelector("#w-list ul");
+      const ulElement = document.querySelector("#webtoon-list-all ul");
       if (ulElement) {
         const liElements = ulElement.querySelectorAll("li");
         const url =
