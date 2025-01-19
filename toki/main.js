@@ -2,9 +2,10 @@
 // @name        Toki autoHide
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
-// @include     /^https?:\/\/newtoki\d*.com\/.*/
+// @match       *://booktoki*.com/*
+// @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.1.3
+// @version     1.2.0
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -22,7 +23,9 @@
         const remove = data
           .split("\n")
           .map((line) => line.trim())
+          .filter((item) => !item.startsWith("# "))
           .filter(Boolean);
+
         return remove;
       })
       .catch((error) => {
@@ -30,9 +33,10 @@
       });
   }
 
-  function removeLiElements(list) {
+  function removeLiElementsFromNewtoki(list) {
     list.forEach((dt) => {
-      const liElements = document.querySelectorAll("li");
+      const ulElement = document.querySelector("#webtoon-list-all");
+      const liElements = ulElement.querySelectorAll("li");
       liElements.forEach((li) => {
         const dateTitle = li.getAttribute("date-title");
         if (dateTitle === dt) {
@@ -44,14 +48,31 @@
 
   const domain = window.location.hostname;
   if (/^newtoki\d+\.com$/.test(domain)) {
+    const CN =
+      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
+    const etc =
+      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/dev/toki/newtoki/etc.txt";
+
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
-      let remove = [];
-      getList(
-        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt"
-      ).then((result) => {
-        removeLiElements(result);
+      getList(CN).then((result) => {
+        removeLiElementsFromNewtoki(result);
+      });
+      getList(etc).then((result) => {
+        removeLiElementsFromNewtoki(result);
       });
     }
+
+    let elements = document.querySelectorAll(".list-item");
+    elements.forEach(function (element) {
+      element.style.marginRight = "5px";
+      element.style.marginBottom = "5px";
+    });
+  } else if (/^booktoki\d+\.com$/.test(domain)) {
+    let elements = document.querySelectorAll(".list-item");
+    elements.forEach(function (element) {
+      element.style.marginRight = "5px";
+      element.style.marginBottom = "5px";
+    });
   }
 })();
