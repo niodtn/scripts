@@ -2,11 +2,12 @@
 // @name        Toki autoHide
 // @namespace   Niodtn/Toki
 // @match       *://newtoki*.com/*
+// @include     /^https?:\/\/newtoki\d*.com\/.*/
 // @grant       none
 // @version     1.1.2
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
-// @run-at document-end
+// @run-at      document-end
 // @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/main.js
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/main.js
 // ==/UserScript==
