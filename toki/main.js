@@ -47,8 +47,10 @@
   }
 
   const domain = window.location.hostname;
+  const path = window.location.pathname;
 
-  if (/^newtoki\d+\.com$/.test(domain)) { // newtoki
+  if (/^newtoki\d+\.com$/.test(domain) && path == `/webtoon`) {
+    // newtoki
     const CN =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
     const etc =
@@ -72,7 +74,8 @@
     });
     let element_webtoonList = document.querySelector("#webtoon-list");
     element_webtoonList.style.marginRight = "-5px";
-  } else if (/^booktoki\d+\.com$/.test(domain)) { // booktoki
+  } else if (/^booktoki\d+\.com$/.test(domain)) {
+    // booktoki
 
     // Styles
     let elements = document.querySelectorAll(".list-item");
