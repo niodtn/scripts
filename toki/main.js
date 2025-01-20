@@ -85,5 +85,10 @@
     });
     let element_webtoonList = document.querySelector("#webtoon-list");
     element_webtoonList.style.marginRight = "-5px";
+  } else if (
+    /^manatoki\d+\.net$/.test(domain) &&
+    (path = `/page/update` || path == `/bbs/page.php`)
+  ) {
+    // manatoki
   }
 })();
