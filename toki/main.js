@@ -78,8 +78,8 @@
     // booktoki
 
     // Styles
-    let elements = document.querySelectorAll(".list-item");
-    elements.forEach(function (element) {
+    let elements_listItem = document.querySelectorAll(".list-item");
+    elements_listItem.forEach(function (element) {
       element.style.marginRight = "5px";
       element.style.marginBottom = "5px";
     });
