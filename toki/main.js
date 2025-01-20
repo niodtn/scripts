@@ -83,5 +83,7 @@
       element.style.marginRight = "5px";
       element.style.marginBottom = "5px";
     });
+    let element_webtoonList = document.querySelector("#webtoon-list");
+    element_webtoonList.style.marginRight = "-5px";
   }
 })();
