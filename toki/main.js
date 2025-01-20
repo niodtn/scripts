@@ -46,6 +46,18 @@
     });
   }
 
+  function removeDivElementsFromManatoki(list) {
+    list.forEach((dt) => {
+      const buttons = document.querySelectorAll("a.btn.btn-xs.btn-primary");
+      buttons.forEach((button) => {
+        if (button.innerText == "전편보기") {
+          console.log(button.href);
+          console.log(button.getAttribute("rel"));
+        }
+      });
+    });
+  }
+
   const domain = window.location.hostname;
   const path = window.location.pathname;
 
