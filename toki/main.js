@@ -51,7 +51,7 @@
     const CN =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
     const etc =
-      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/dev/toki/newtoki/etc.txt";
+      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/etc.txt";
 
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
