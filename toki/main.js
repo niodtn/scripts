@@ -5,7 +5,7 @@
 // @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.2.2
+// @version     1.2.3
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -61,7 +61,7 @@
   const domain = window.location.hostname;
   const path = window.location.pathname;
 
-  if (/^newtoki\d+\.com$/.test(domain) && path == `/webtoon`) {
+  if (/^newtoki\d+\.com$/.test(domain) && /^\/webtoon(?:\/p\w{1,2})?$/.test(path)) {
     // newtoki
     const CN =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
