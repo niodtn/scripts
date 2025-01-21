@@ -5,7 +5,7 @@
 // @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.2.1
+// @version     1.2.2
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -46,8 +46,23 @@
     });
   }
 
+  function removeDivElementsFromManatoki(list) {
+    list.forEach((dt) => {
+      const buttons = document.querySelectorAll("a.btn.btn-xs.btn-primary");
+      buttons.forEach((button) => {
+        if (button.innerText == "전편보기") {
+          console.log(button.href);
+          console.log(button.getAttribute("rel"));
+        }
+      });
+    });
+  }
+
   const domain = window.location.hostname;
-  if (/^newtoki\d+\.com$/.test(domain)) {
+  const path = window.location.pathname;
+
+  if (/^newtoki\d+\.com$/.test(domain) && path == `/webtoon`) {
+    // newtoki
     const CN =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
     const etc =
@@ -63,16 +78,29 @@
       });
     }
 
-    let elements = document.querySelectorAll(".list-item");
-    elements.forEach(function (element) {
+    // Styles
+    let elements_listItem = document.querySelectorAll(".list-item");
+    elements_listItem.forEach(function (element) {
       element.style.marginRight = "5px";
       element.style.marginBottom = "5px";
     });
-  } else if (/^booktoki\d+\.com$/.test(domain)) {
-    let elements = document.querySelectorAll(".list-item");
-    elements.forEach(function (element) {
+    let element_webtoonList = document.querySelector("#webtoon-list");
+    element_webtoonList.style.marginRight = "-5px";
+  } else if (/^booktoki\d+\.com$/.test(domain) && path == `/novel`) {
+    // booktoki
+
+    // Styles
+    let elements_listItem = document.querySelectorAll(".list-item");
+    elements_listItem.forEach(function (element) {
       element.style.marginRight = "5px";
       element.style.marginBottom = "5px";
     });
+    let element_webtoonList = document.querySelector("#webtoon-list");
+    element_webtoonList.style.marginRight = "-5px";
+  } else if (
+    /^manatoki\d+\.net$/.test(domain) &&
+    (path = `/page/update` || path == `/bbs/page.php`)
+  ) {
+    // manatoki
   }
 })();
