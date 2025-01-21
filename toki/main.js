@@ -61,7 +61,7 @@
   const domain = window.location.hostname;
   const path = window.location.pathname;
 
-  if (/^newtoki\d+\.com$/.test(domain) && path == `/webtoon`) {
+  if (/^newtoki\d+\.com$/.test(domain) && /^\/webtoon(?:\/p\w{1,2})?$/.test(path)) {
     // newtoki
     const CN =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
