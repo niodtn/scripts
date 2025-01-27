@@ -5,7 +5,7 @@
 // @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.2.3
+// @version     1.2.4
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -13,55 +13,57 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/main.js
 // ==/UserScript==
 
+function getList(url) {
+  return fetch(url)
+    .then((response) => response.text())
+    .then((data) => {
+      const remove = data
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((item) => !item.startsWith("# "))
+        .filter(Boolean);
+      return remove;
+    })
+    .catch((error) => {
+      console.error("Niodtn/Toki: ", error);
+    });
+}
+
+function removeLiElementsFromNewtoki(list) {
+  list.forEach((dt) => {
+    const ulElement = document.querySelector("#webtoon-list-all");
+    const liElements = ulElement.querySelectorAll("li");
+    liElements.forEach((li) => {
+      const dateTitle = li.getAttribute("date-title");
+      if (dateTitle === dt) {
+        li.remove();
+      }
+    });
+  });
+}
+
+function removeDivElementsFromManatoki(list) {
+  list.forEach((dt) => {
+    const buttons = document.querySelectorAll("a.btn.btn-xs.btn-primary");
+    buttons.forEach((button) => {
+      if (button.innerText == "전편보기") {
+        console.log(button.href);
+        console.log(button.getAttribute("rel"));
+      }
+    });
+  });
+}
+
 (function () {
   "use strict";
-
-  function getList(url) {
-    return fetch(url)
-      .then((response) => response.text())
-      .then((data) => {
-        const remove = data
-          .split("\n")
-          .map((line) => line.trim())
-          .filter((item) => !item.startsWith("# "))
-          .filter(Boolean);
-
-        return remove;
-      })
-      .catch((error) => {
-        console.error("Niodtn/Toki: ", error);
-      });
-  }
-
-  function removeLiElementsFromNewtoki(list) {
-    list.forEach((dt) => {
-      const ulElement = document.querySelector("#webtoon-list-all");
-      const liElements = ulElement.querySelectorAll("li");
-      liElements.forEach((li) => {
-        const dateTitle = li.getAttribute("date-title");
-        if (dateTitle === dt) {
-          li.remove();
-        }
-      });
-    });
-  }
-
-  function removeDivElementsFromManatoki(list) {
-    list.forEach((dt) => {
-      const buttons = document.querySelectorAll("a.btn.btn-xs.btn-primary");
-      buttons.forEach((button) => {
-        if (button.innerText == "전편보기") {
-          console.log(button.href);
-          console.log(button.getAttribute("rel"));
-        }
-      });
-    });
-  }
 
   const domain = window.location.hostname;
   const path = window.location.pathname;
 
-  if (/^newtoki\d+\.com$/.test(domain) && /^\/webtoon(?:\/p\w{1,2})?$/.test(path)) {
+  if (
+    /^newtoki\d+\.com$/.test(domain) &&
+    /^\/webtoon(?:\/p\w{1,2})?$/.test(path)
+  ) {
     // newtoki
     const CN =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
