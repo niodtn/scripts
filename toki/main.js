@@ -80,6 +80,9 @@ function removeDivElementsFromManatoki(list) {
       getList(etc).then((result) => {
         removeLiElementsFromNewtoki(result);
       });
+      getList(PB).then((result) => {
+        removeLiElementsFromNewtoki(result);
+      });
     }
 
     // Styles
