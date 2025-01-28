@@ -5,7 +5,7 @@
 // @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.2.4
+// @version     1.2.5
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -69,6 +69,8 @@ function removeDivElementsFromManatoki(list) {
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
     const etc =
       "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/etc.txt";
+    const PB =
+      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/PB.txt";
 
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
@@ -76,6 +78,9 @@ function removeDivElementsFromManatoki(list) {
         removeLiElementsFromNewtoki(result);
       });
       getList(etc).then((result) => {
+        removeLiElementsFromNewtoki(result);
+      });
+      getList(PB).then((result) => {
         removeLiElementsFromNewtoki(result);
       });
     }
