@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Toki autoHide
-// @namespace   Niodtn/Toki
+// @namespace   github:niodtn/scripts/toki
 // @match       *://newtoki*.com/*
 // @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
