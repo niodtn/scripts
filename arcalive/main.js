@@ -11,22 +11,28 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/arcalive/main.js
 // ==/UserScript==
 
-
-function isValidBase64(str) {
-  const urlPattern = /https?/g;
-  const base64Pattern = /(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}[A-Za-z0-9+/=]{0,2})?/g;
-  if (base64Pattern.test(str)){
-    const matches = str.match(base64Pattern).filter(match => match !== "");
-    matches.forEach(match => {
-      let url = atob(match)
-      if (urlPattern.test(url)) {
-        console.log(url)
-      }
-    });
-  }
-}
+const urlPattern = /https?/g;
+const base64Pattern = /(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}[A-Za-z0-9+/=]{0,2})?/g;
 
 (function () {
-  let elements = document.querySelectorAll('.article-content');
-  isValidBase64("fuck you\n kimchi");
+  let ac = document.querySelectorAll(".article-content")[0];
+
+  let elements = ac.querySelectorAll("p");
+  elements.forEach((element) => {
+    let target = element.textContent;
+
+    if (base64Pattern.test(target)) {
+      // base64Pattern test
+      try {
+        let url = atob(target);
+        if (urlPattern.test(url)) {
+          // urlPattern test
+          element.innerHTML = url;
+        }
+      } catch (error) {
+        console.log(target);
+        console.error(error);
+      }
+    }
+  });
 })();
