@@ -25,17 +25,18 @@ const base64Pattern = /(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}[A-Za-z0-9+/=]{0,
       // base64Pattern test
       try {
         let url = atob(target);
+        console.log(target);
         if (urlPattern.test(url)) {
           // urlPattern test
-          element.innerHTML = '';
           const newA = document.createElement("a");
           newA.href = url;
-          newA.innerHTML = target;
+          newA.innerHTML = url;
+          element.textContent = "";
           element.appendChild(newA);
         }
       } catch (error) {
-        console.log(target);
-        console.error(error);
+        console.error(target);
+        // console.error(error);
       }
     }
   });
