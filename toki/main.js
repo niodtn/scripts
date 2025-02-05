@@ -13,32 +13,30 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/main.js
 // ==/UserScript==
 
-function getList(url) {
-  return fetch(url)
-    .then((response) => response.text())
-    .then((data) => {
-      const remove = data
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((item) => !item.startsWith("# "))
-        .filter(Boolean);
-      return remove;
-    })
-    .catch((error) => {
-      console.error("Niodtn/Toki: ", error);
-    });
+async function getList(url) {
+  let response = await fetch(url);
+  let data = await response.text();
+
+  data = data.split("\n");
+  data = data.filter(Boolean); // 빈줄 필터링
+  data = data.filter((item) => !item.startsWith("# ")); // #으로 시작하는 줄 필터링
+  return data;
 }
 
-function removeLiElementsFromNewtoki(list) {
-  list.forEach((dt) => {
-    const ulElement = document.querySelector("#webtoon-list-all");
-    const liElements = ulElement.querySelectorAll("li");
-    liElements.forEach((li) => {
-      const dateTitle = li.getAttribute("date-title");
-      if (dateTitle === dt) {
-        li.remove();
-      }
-    });
+async function newtoki(ulElement) {
+  const [CN, etc, PB] = await Promise.all([
+    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt"),
+    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/etc.txt"),
+    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/PB.txt"),
+  ]);
+
+  let combined = [...CN, ...etc, ...PB];
+  let nodups = [...new Set(combined)];
+
+  ulElement.querySelectorAll("li").forEach((li) => {
+    const dateTitle = li.getAttribute("date-title");
+      let tt = nodups.some(x => x === dateTitle);
+      if (tt) li.remove();
   });
 }
 
@@ -65,24 +63,9 @@ function removeDivElementsFromManatoki(list) {
     /^\/webtoon(?:\/p\w{1,2})?$/.test(path)
   ) {
     // newtoki
-    const CN =
-      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt";
-    const etc =
-      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/etc.txt";
-    const PB =
-      "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/PB.txt";
-
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
-      getList(CN).then((result) => {
-        removeLiElementsFromNewtoki(result);
-      });
-      getList(etc).then((result) => {
-        removeLiElementsFromNewtoki(result);
-      });
-      getList(PB).then((result) => {
-        removeLiElementsFromNewtoki(result);
-      });
+      newtoki(ulElement);
     }
 
     // Styles
