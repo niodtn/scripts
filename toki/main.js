@@ -35,8 +35,8 @@ async function newtoki(ulElement) {
 
   ulElement.querySelectorAll("li").forEach((li) => {
     const dateTitle = li.getAttribute("date-title");
-      let tt = nodups.some(x => x === dateTitle);
-      if (tt) li.remove();
+    let tt = nodups.some((x) => x === dateTitle);
+    if (tt) li.remove();
   });
 }
 
