@@ -24,12 +24,10 @@ async function getList(url) {
 }
 
 async function newtoki(ulElement) {
-  const [CN, etc, PB] = await Promise.all([
+  let data = (await Promise.all([
     getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki.txt"),
-  ]);
-
-  let combined = [...CN, ...etc, ...PB];
-  let nodups = [...new Set(combined)];
+  ])).flat();
+  let nodups = [...new Set(data)];
 
   ulElement.querySelectorAll("li").forEach((li) => {
     const dateTitle = li.getAttribute("date-title");
