@@ -5,7 +5,7 @@
 // @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.2.6
+// @version     1.2.7
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -25,9 +25,7 @@ async function getList(url) {
 
 async function newtoki(ulElement) {
   const [CN, etc, PB] = await Promise.all([
-    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/CN.txt"),
-    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/etc.txt"),
-    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki/PB.txt"),
+    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki.txt"),
   ]);
 
   let combined = [...CN, ...etc, ...PB];
