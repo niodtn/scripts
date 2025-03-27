@@ -24,9 +24,11 @@ async function getList(url) {
 }
 
 async function newtoki(ulElement) {
-  let data = (await Promise.all([
-    getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki.txt"),
-  ])).flat();
+  let data = (
+    await Promise.all([
+      getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki.txt"),
+    ])
+  ).flat();
   let nodups = [...new Set(data)];
 
   ulElement.querySelectorAll("li").forEach((li) => {
