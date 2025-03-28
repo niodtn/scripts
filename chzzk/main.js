@@ -3,7 +3,7 @@
 // @namespace   github:niodtn/scripts/chzzk
 // @match       *://chzzk.naver.com/live/*
 // @grant       none
-// @version     0.0.3
+// @version     1.0.0
 // @author      Niodtn
 // @run-at      document-end
 // @description Chzzk Custom
