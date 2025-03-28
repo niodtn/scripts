@@ -3,10 +3,10 @@
 // @namespace   github:niodtn/scripts/chzzk
 // @match       *://chzzk.naver.com/live/*
 // @grant       none
-// @version     0.0.1
+// @version     0.0.2
 // @author      Niodtn
 // @run-at      document-end
-// @description Personal Tampermonkey script to filter content on newtoki.com
+// @description Chzzk Custom
 // @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/chzzk/chzzk/main.js
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/chzzk/chzzk/main.js
 // ==/UserScript==
@@ -30,8 +30,17 @@ function removeElement(el) {
   el.remove();
 }
 
+function alignToCenter(el) {
+  el.style.display = "flex";
+  el.style.justifyContent = "center";
+  el.style.alignItems = "center";
+  el.style.minHeight = "auto";
+}
+
 (function () {
   "use strict";
 
   findAndRun(removeElement, "[class^='live_chatting_input_container']");
+  findAndRun(removeElement, "#send_chat_or_donate");
+  findAndRun(alignToCenter, "[class^='live_chatting_area'");
 })();
