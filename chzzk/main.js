@@ -11,18 +11,11 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/chzzk/chzzk/main.js
 // ==/UserScript==
 
-function removeChattingInput(target) {
-  console.log("test!");
-  console.log(target);
-}
-
-(function () {
-  "use strict";
-
+function findAndRun(func, target) {
   const observer = new MutationObserver((mutations, obs) => {
-    const target = document.querySelector("#aside-chatting");
-    if (target) {
-      removeChattingInput(target);
+    const _target = document.querySelector(target);
+    if (_target) {
+      func(_target);
       obs.disconnect();
     }
   });
@@ -31,4 +24,14 @@ function removeChattingInput(target) {
     childList: true,
     subtree: true,
   });
+}
+
+function removeElement(el) {
+  el.remove();
+}
+
+(function () {
+  "use strict";
+
+  findAndRun(removeElement, "[class^='live_chatting_input_container']");
 })();
