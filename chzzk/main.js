@@ -3,12 +3,12 @@
 // @namespace   github:niodtn/scripts/chzzk
 // @match       *://chzzk.naver.com/live/*
 // @grant       none
-// @version     0.0.2
+// @version     0.0.3
 // @author      Niodtn
 // @run-at      document-end
 // @description Chzzk Custom
-// @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/chzzk/chzzk/main.js
-// @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/chzzk/chzzk/main.js
+// @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/chzzk/main.js
+// @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/chzzk/main.js
 // ==/UserScript==
 
 function findAndRun(func, target) {
@@ -40,6 +40,10 @@ function alignToCenter(el) {
 (function () {
   "use strict";
 
+  // Remove Popup
+  findAndRun(removeElement, "[class^='popup_dimmed']");
+
+  // Remove Chatting Input
   findAndRun(removeElement, "[class^='live_chatting_input_container']");
   findAndRun(removeElement, "#send_chat_or_donate");
   findAndRun(alignToCenter, "[class^='live_chatting_area'");
