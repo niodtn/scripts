@@ -3,7 +3,7 @@
 // @namespace   github:niodtn/scripts/chzzk
 // @match       *://chzzk.naver.com/live/*
 // @grant       none
-// @version     1.0.0
+// @version     1.0.1
 // @author      Niodtn
 // @run-at      document-end
 // @description Chzzk Custom
@@ -12,22 +12,39 @@
 // ==/UserScript==
 
 function findAndRun(func, target) {
-  const observer = new MutationObserver((mutations, obs) => {
+  const runFunc = () => {
     const _target = document.querySelector(target);
-    if (_target) {
-      func(_target);
-      obs.disconnect();
-    }
-  });
+    if (_target) func(_target);
+  };
 
-  observer.observe(document, {
-    childList: true,
-    subtree: true,
-  });
+  runFunc();
+
+  const observer = new MutationObserver(runFunc);
+  observer.observe(document, { childList: true, subtree: true });
+
+  const originalPushState = history.pushState;
+  const originalReplaceState = history.replaceState;
+
+  const onUrlChange = () => {
+    runFunc();
+  };
+
+  history.pushState = function (...args) {
+    originalPushState.apply(this, args);
+    onUrlChange();
+  };
+
+  history.replaceState = function (...args) {
+    originalReplaceState.apply(this, args);
+    onUrlChange();
+  };
+
+  window.addEventListener("popstate", onUrlChange);
 }
 
 function removeElement(el) {
-  el.remove();
+  // el.remove();
+  el.style.display = "none";
 }
 
 function alignToCenter(el) {
