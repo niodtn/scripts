@@ -5,7 +5,7 @@
 // @match       *://booktoki*.com/*
 // @include     /^https?:\/\/\w*toki\d*.com\/.*/
 // @grant       none
-// @version     1.2.7
+// @version     1.3.0
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -19,7 +19,7 @@ async function getList(url) {
 
   data = data.split("\n");
   data = data.filter(Boolean); // 빈줄 필터링
-  data = data.filter((item) => !item.startsWith("# ")); // #으로 시작하는 줄 필터링
+  data = data.filter((item) => !item.startsWith("# ")); // `#`으로 시작하는 줄 필터링
   return data;
 }
 
@@ -27,6 +27,21 @@ async function newtoki(ulElement) {
   let data = (
     await Promise.all([
       getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki.txt"),
+    ])
+  ).flat();
+  let nodups = [...new Set(data)];
+
+  ulElement.querySelectorAll("li").forEach((li) => {
+    const dateTitle = li.getAttribute("date-title");
+    let tt = nodups.some((x) => x === dateTitle);
+    if (tt) li.remove();
+  });
+}
+
+async function booktoki(ulElement) {
+  let data = (
+    await Promise.all([
+      getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/booktoki.txt"),
     ])
   ).flat();
   let nodups = [...new Set(data)];
@@ -74,8 +89,15 @@ function removeDivElementsFromManatoki(list) {
     });
     let element_webtoonList = document.querySelector("#webtoon-list");
     element_webtoonList.style.marginRight = "-5px";
-  } else if (/^booktoki\d+\.com$/.test(domain) && path == `/novel`) {
+  } else if (
+    /^booktoki\d+\.com$/.test(domain) &&
+    /^\/novel(?:\/p\w{1,2})?$/.test(path)
+  ) {
     // booktoki
+    const ulElement = document.querySelector("#webtoon-list-all");
+    if (ulElement) {
+      booktoki(ulElement);
+    }
 
     // Styles
     let elements_listItem = document.querySelectorAll(".list-item");
