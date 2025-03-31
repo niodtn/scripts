@@ -89,7 +89,10 @@ function removeDivElementsFromManatoki(list) {
     });
     let element_webtoonList = document.querySelector("#webtoon-list");
     element_webtoonList.style.marginRight = "-5px";
-  } else if (/^booktoki\d+\.com$/.test(domain) && path == `/novel`) {
+  } else if (
+    /^booktoki\d+\.com$/.test(domain) &&
+    /^\/novel(?:\/p\w{1,2})?$/.test(path)
+  ) {
     // booktoki
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
