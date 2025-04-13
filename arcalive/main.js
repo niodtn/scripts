@@ -3,7 +3,7 @@
 // @namespace   github:niodtn/scripts/arcalive
 // @match       *://arca.live/b/*
 // @grant       none
-// @version     1.0.0
+// @version     1.0.1
 // @author      Niodtn
 // @description 아카라이브 Base64로 인코딩된 링크를 자동으로 디코딩
 // @run-at      document-end
