@@ -11,9 +11,6 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/arcalive/main.js
 // ==/UserScript==
 
-const urlPattern = /https?/g;
-const base64Pattern = /(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}[A-Za-z0-9+/=]{0,2})?/g;
-
 const urlPattern = /https?:\/\//g;
 const base64Pattern =
   /(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}[A-Za-z0-9+/=]{0,2})?/g;
