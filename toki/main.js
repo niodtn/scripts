@@ -76,13 +76,21 @@ function isManatoki(domain, path) {
 }
 
 async function manatoki(divElement) {
+  let data = (
+    await Promise.all([
+      getList(
+        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/toki/toki/manatoki.txt"
+      ),
+    ])
+  ).flat();
+  let nodups = [...new Set(data)];
+
   divElement.querySelectorAll(".post-row").forEach((div) => {
     const a = div.querySelector(".media-body").querySelector("a");
     let text = a.textContent;
     text = text.replace(/\s+/g, " ").trim();
-    text = text.replace(/\s\w*화\s\w*\s\w*/, "");
-    console.log(text);
-    return;
+    text = text.replace(/\s[\d.~\-]+화\s\w*\s\w*/, "");
+    if (nodups.some((x) => x === text)) div.remove();
   });
 }
 
