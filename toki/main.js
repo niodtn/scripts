@@ -1,11 +1,9 @@
 // ==UserScript==
 // @name        Toki autoHide
 // @namespace   github:niodtn/scripts/toki
-// @match       *://newtoki*.com/*
-// @match       *://booktoki*.com/*
-// @include     /^https?:\/\/\w*toki\d*.com\/.*/
+// @include     /https:\/\/\w*toki\d*.(com|net)\/.*/
 // @grant       none
-// @version     1.3.0
+// @version     1.4.0
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -23,45 +21,74 @@ async function getList(url) {
   return data;
 }
 
+function isNewtoki(domain, path) {
+  const domainRegex = /^newtoki\d+\.com$/;
+  const pathRegex = /^\/webtoon(?:\/p\w{1,2})?$/;
+  return domainRegex.test(domain) && pathRegex.test(path);
+}
+
 async function newtoki(ulElement) {
   let data = (
     await Promise.all([
-      getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki.txt"),
+      getList(
+        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/newtoki.txt"
+      ),
     ])
   ).flat();
   let nodups = [...new Set(data)];
 
   ulElement.querySelectorAll("li").forEach((li) => {
     const dateTitle = li.getAttribute("date-title");
-    let tt = nodups.some((x) => x === dateTitle);
-    if (tt) li.remove();
+    if (nodups.some((x) => x === dateTitle)) li.remove();
   });
+}
+
+function isBooktoki(domain, path) {
+  const domainRegex = /^booktoki\d+\.com$/;
+  const pathRegex = /^\/novel(?:\/p\w{1,2})?$/;
+  return domainRegex.test(domain) && pathRegex.test(path);
 }
 
 async function booktoki(ulElement) {
   let data = (
     await Promise.all([
-      getList("https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/booktoki.txt"),
+      getList(
+        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/booktoki.txt"
+      ),
     ])
   ).flat();
   let nodups = [...new Set(data)];
 
   ulElement.querySelectorAll("li").forEach((li) => {
     const dateTitle = li.getAttribute("date-title");
-    let tt = nodups.some((x) => x === dateTitle);
-    if (tt) li.remove();
+    if (nodups.some((x) => x === dateTitle)) li.remove();
   });
 }
 
-function removeDivElementsFromManatoki(list) {
-  list.forEach((dt) => {
-    const buttons = document.querySelectorAll("a.btn.btn-xs.btn-primary");
-    buttons.forEach((button) => {
-      if (button.innerText == "전편보기") {
-        console.log(button.href);
-        console.log(button.getAttribute("rel"));
-      }
-    });
+function isManatoki(domain, path) {
+  const domainRegex = /^manatoki\d+\.net$/;
+  return (
+    domainRegex.test(domain) &&
+    (path = `/page/update` || path == `/bbs/page.php`)
+  );
+}
+
+async function manatoki(divElement) {
+  let data = (
+    await Promise.all([
+      getList(
+        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/manatoki.txt"
+      ),
+    ])
+  ).flat();
+  let nodups = [...new Set(data)];
+
+  divElement.querySelectorAll(".post-row").forEach((div) => {
+    const a = div.querySelector(".media-body").querySelector("a");
+    let text = a.textContent;
+    text = text.replace(/\s+/g, " ").trim();
+    text = text.replace(/\s[\d.~\-]+화\s\w*\s\w*/, "");
+    if (nodups.some((x) => x === text)) div.remove();
   });
 }
 
@@ -71,11 +98,7 @@ function removeDivElementsFromManatoki(list) {
   const domain = window.location.hostname;
   const path = window.location.pathname;
 
-  if (
-    /^newtoki\d+\.com$/.test(domain) &&
-    /^\/webtoon(?:\/p\w{1,2})?$/.test(path)
-  ) {
-    // newtoki
+  if (isNewtoki(domain, path)) {
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
       newtoki(ulElement);
@@ -89,11 +112,7 @@ function removeDivElementsFromManatoki(list) {
     });
     let element_webtoonList = document.querySelector("#webtoon-list");
     element_webtoonList.style.marginRight = "-5px";
-  } else if (
-    /^booktoki\d+\.com$/.test(domain) &&
-    /^\/novel(?:\/p\w{1,2})?$/.test(path)
-  ) {
-    // booktoki
+  } else if (isBooktoki(domain, path)) {
     const ulElement = document.querySelector("#webtoon-list-all");
     if (ulElement) {
       booktoki(ulElement);
@@ -107,10 +126,12 @@ function removeDivElementsFromManatoki(list) {
     });
     let element_webtoonList = document.querySelector("#webtoon-list");
     element_webtoonList.style.marginRight = "-5px";
-  } else if (
-    /^manatoki\d+\.net$/.test(domain) &&
-    (path = `/page/update` || path == `/bbs/page.php`)
-  ) {
-    // manatoki
+  } else if (isManatoki(domain, path)) {
+    const divElement = document
+      .querySelector("#at-main")
+      .querySelector(".post-wrap");
+    if (divElement) {
+      manatoki(divElement);
+    }
   }
 })();
