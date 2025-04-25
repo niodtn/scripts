@@ -3,7 +3,7 @@
 // @namespace   github:niodtn/scripts/toki
 // @include     /https:\/\/\w*toki\d*.(com|net)\/.*/
 // @grant       none
-// @version     1.3.0
+// @version     1.4.0
 // @author      Niodtn
 // @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
@@ -39,8 +39,7 @@ async function newtoki(ulElement) {
 
   ulElement.querySelectorAll("li").forEach((li) => {
     const dateTitle = li.getAttribute("date-title");
-    let tt = nodups.some((x) => x === dateTitle);
-    if (tt) li.remove();
+    if (nodups.some((x) => x === dateTitle)) li.remove();
   });
 }
 
@@ -62,8 +61,7 @@ async function booktoki(ulElement) {
 
   ulElement.querySelectorAll("li").forEach((li) => {
     const dateTitle = li.getAttribute("date-title");
-    let tt = nodups.some((x) => x === dateTitle);
-    if (tt) li.remove();
+    if (nodups.some((x) => x === dateTitle)) li.remove();
   });
 }
 
@@ -79,7 +77,7 @@ async function manatoki(divElement) {
   let data = (
     await Promise.all([
       getList(
-        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/toki/toki/manatoki.txt"
+        "https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/manatoki.txt"
       ),
     ])
   ).flat();
