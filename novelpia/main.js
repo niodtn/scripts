@@ -67,6 +67,7 @@ function getContinueEpisodeNumber(novel) {
       .forEach((novel) => {
         const numbers = getAllEpisodeNumbers(novel);
         const continueEp = getContinueEpisodeNumber(novel);
+
         // 읽은 퍼센트 계산
         let percentText = "";
         if (numbers.length > 0 && continueEp !== null) {
