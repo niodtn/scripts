@@ -97,6 +97,12 @@ function getContinueEpisodeNumber(novel) {
           const remainDiv = createNovelInfoDiv("남은 회차", remainText);
           novel.querySelector(".novel-numerical").appendChild(remainDiv);
         }
+
+        if (percentText !== "" || remainText !== "") {
+          const numerical = novel.querySelectorAll(".novel-numerical > div");
+          numerical[0].remove();
+          numerical[2].remove();
+        }
       });
   }
 })();
