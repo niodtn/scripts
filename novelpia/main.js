@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Novelpia Script
 // @namespace    github:niodtn/scripts/novelpia
-// @version      2025-08-15
+// @version      2025-08-16
 // @description  Novelpia
 // @author       Niodtn
 // @match        *://novelpia.com/*
@@ -9,8 +9,8 @@
 // @match        *://www.novelpia.com/*
 // @grant        none
 // @run-at       document-end
-// @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
-// @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
+// @downloadURL  https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
+// @updateURL    https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
 // ==/UserScript==
 
 function createNovelInfoDiv(title, content) {
@@ -78,8 +78,10 @@ function getContinueEpisodeNumber(novel) {
             percentText = ` ${percent}%`;
           }
         }
-        const div = createNovelInfoDiv("진도", percentText);
-        novel.querySelector(".novel-numerical").appendChild(div);
+        if (percentText !== "") {
+          const percentDiv = createNovelInfoDiv("진도", percentText);
+          novel.querySelector(".novel-numerical").appendChild(percentDiv);
+        }
 
         // 남은 회차 계산
         let remainText = "";
@@ -91,8 +93,10 @@ function getContinueEpisodeNumber(novel) {
             remainText = ` ${remain}`;
           }
         }
-        const remainDiv = createNovelInfoDiv("남은 회차", remainText);
-        novel.querySelector(".novel-numerical").appendChild(remainDiv);
+        if (remainText !== "") {
+          const remainDiv = createNovelInfoDiv("남은 회차", remainText);
+          novel.querySelector(".novel-numerical").appendChild(remainDiv);
+        }
       });
   }
 })();
