@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Novelpia Script
 // @namespace    github:niodtn/scripts/novelpia
-// @version      2025-08-16
+// @version      2025-08-16a
 // @description  Novelpia
 // @author       Niodtn
 // @match        *://novelpia.com/*
@@ -96,6 +96,12 @@ function getContinueEpisodeNumber(novel) {
         if (remainText !== "") {
           const remainDiv = createNovelInfoDiv("남은 회차", remainText);
           novel.querySelector(".novel-numerical").appendChild(remainDiv);
+        }
+
+        if (percentText !== "" || remainText !== "") {
+          const numerical = novel.querySelectorAll(".novel-numerical > div");
+          numerical[0].remove();
+          numerical[2].remove();
         }
       });
   }
