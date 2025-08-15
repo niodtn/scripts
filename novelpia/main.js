@@ -9,8 +9,8 @@
 // @match        *://www.novelpia.com/*
 // @grant        none
 // @run-at       document-end
-// @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
-// @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
+// @downloadURL  https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
+// @updateURL    https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
 // ==/UserScript==
 
 function createNovelInfoDiv(title, content) {
