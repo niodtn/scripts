@@ -16,9 +16,23 @@
 (function () {
   "use strict";
   const path = window.location.pathname;
-  console.log("test test test test test test test test test");
 
-  if (path == "/mybook") {
-    console.log("Novelpia: My Book Page");
+  if (path.startsWith("/mybook")) {
+    document
+      .querySelector(".mybook-data-list-items")
+      .querySelectorAll(".novel-list-real-container")
+      .forEach((novel) => {
+        novel.querySelectorAll(".novel-numerical");
+
+        // Injecting a new div and span element
+        const div = document.createElement("div");
+        const span = document.createElement("span");
+
+        span.className = "novel-numerical-content";
+        span.textContent = "내용";
+
+        div.appendChild(span);
+        novel.querySelector(".novel-numerical").appendChild(div);
+      });
   }
 })();
