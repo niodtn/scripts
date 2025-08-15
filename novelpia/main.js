@@ -78,8 +78,10 @@ function getContinueEpisodeNumber(novel) {
             percentText = ` ${percent}%`;
           }
         }
-        const div = createNovelInfoDiv("진도", percentText);
-        novel.querySelector(".novel-numerical").appendChild(div);
+        if (percentText !== "") {
+          const percentDiv = createNovelInfoDiv("진도", percentText);
+          novel.querySelector(".novel-numerical").appendChild(percentDiv);
+        }
 
         // 남은 회차 계산
         let remainText = "";
@@ -91,8 +93,10 @@ function getContinueEpisodeNumber(novel) {
             remainText = ` ${remain}`;
           }
         }
-        const remainDiv = createNovelInfoDiv("남은 회차", remainText);
-        novel.querySelector(".novel-numerical").appendChild(remainDiv);
+        if (remainText !== "") {
+          const remainDiv = createNovelInfoDiv("남은 회차", remainText);
+          novel.querySelector(".novel-numerical").appendChild(remainDiv);
+        }
       });
   }
 })();
