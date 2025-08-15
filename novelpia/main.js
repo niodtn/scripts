@@ -34,7 +34,7 @@ function getAllEpisodeNumbers(novel) {
 }
 
 function getContinueEpisodeNumber(novel) {
-  const btn = novel.querySelector("button .novel-btn-continue");
+  const btn = novel.querySelector(".novel-btn-continue");
   if (!btn) return null;
   const match = btn.textContent.match(/EP\.(\d+)/);
   return match ? match[1] : null;
@@ -53,8 +53,19 @@ function getContinueEpisodeNumber(novel) {
         const span = document.createElement("span");
 
         span.className = "novel-numerical-content";
-        // const numbers = getAllEpisodeNumbers(novel);
-        // span.textContent = numbers.length > 0 ? numbers[0] : "";
+        const numbers = getAllEpisodeNumbers(novel);
+        const continueEp = getContinueEpisodeNumber(novel);
+        // 읽은 퍼센트 계산: (이어보기 회차 / 전체 회차) * 100
+        let percentText = "";
+        if (numbers.length > 0 && continueEp !== null) {
+          const total = parseInt(numbers[0].replace(/[^\d]/g, ""), 10);
+          const current = parseInt(continueEp.replace(/[^\d]/g, ""), 10);
+          if (!isNaN(total) && !isNaN(current) && total > 0) {
+            const percent = Math.floor((current / total) * 100);
+            percentText = `${percent}%`;
+          }
+        }
+        span.textContent = percentText;
 
         div.appendChild(span);
         novel.querySelector(".novel-numerical").appendChild(div);
