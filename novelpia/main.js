@@ -13,12 +13,19 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
 // ==/UserScript==
 
-function createReadPercentDiv(percentText) {
+function createNovelInfoDiv(title, content) {
   const div = document.createElement("div");
-  const span = document.createElement("span");
-  span.className = "novel-numerical-content";
-  span.textContent = percentText;
-  div.appendChild(span);
+  const span_title = document.createElement("span");
+  const span_content = document.createElement("span");
+
+  span_title.className = "novel-numerical-title";
+  span_title.textContent = title;
+  div.appendChild(span_title);
+
+  span_content.className = "novel-numerical-content";
+  span_content.textContent = content;
+  div.appendChild(span_content);
+
   return div;
 }
 
@@ -67,12 +74,24 @@ function getContinueEpisodeNumber(novel) {
           const current = parseInt(continueEp.replace(/[^\d]/g, ""), 10);
           if (!isNaN(total) && !isNaN(current) && total > 0) {
             const percent = Math.floor((current / total) * 100);
-            percentText = `${percent}%`;
+            percentText = ` ${percent}%`;
           }
         }
-        // 읽은 퍼센트 div 생성 및 삽입
-        const div = createReadPercentDiv(percentText);
+        const div = createNovelInfoDiv("진도", percentText);
         novel.querySelector(".novel-numerical").appendChild(div);
+
+        // 남은 회차 계산
+        let remainText = "";
+        if (numbers.length > 0 && continueEp !== null) {
+          const total = parseInt(numbers[0].replace(/[^\d]/g, ""), 10);
+          const current = parseInt(continueEp.replace(/[^\d]/g, ""), 10);
+          if (!isNaN(total) && !isNaN(current)) {
+            const remain = total - current;
+            remainText = ` ${remain}`;
+          }
+        }
+        const remainDiv = createNovelInfoDiv("남은 회차", remainText);
+        novel.querySelector(".novel-numerical").appendChild(remainDiv);
       });
   }
 })();
