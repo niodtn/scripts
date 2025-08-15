@@ -13,6 +13,15 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
 // ==/UserScript==
 
+function createReadPercentDiv(percentText) {
+  const div = document.createElement("div");
+  const span = document.createElement("span");
+  span.className = "novel-numerical-content";
+  span.textContent = percentText;
+  div.appendChild(span);
+  return div;
+}
+
 function getAllEpisodeNumbers(novel) {
   const numericalDivs = novel.querySelectorAll(".novel-numerical > div");
   let result = [];
@@ -49,13 +58,9 @@ function getContinueEpisodeNumber(novel) {
       .querySelector(".mybook-data-list-items")
       .querySelectorAll(".novel-list-real-container")
       .forEach((novel) => {
-        const div = document.createElement("div");
-        const span = document.createElement("span");
-
-        span.className = "novel-numerical-content";
         const numbers = getAllEpisodeNumbers(novel);
         const continueEp = getContinueEpisodeNumber(novel);
-        // 읽은 퍼센트 계산: (이어보기 회차 / 전체 회차) * 100
+        // 읽은 퍼센트 계산
         let percentText = "";
         if (numbers.length > 0 && continueEp !== null) {
           const total = parseInt(numbers[0].replace(/[^\d]/g, ""), 10);
@@ -65,9 +70,8 @@ function getContinueEpisodeNumber(novel) {
             percentText = `${percent}%`;
           }
         }
-        span.textContent = percentText;
-
-        div.appendChild(span);
+        // 읽은 퍼센트 div 생성 및 삽입
+        const div = createReadPercentDiv(percentText);
         novel.querySelector(".novel-numerical").appendChild(div);
       });
   }
