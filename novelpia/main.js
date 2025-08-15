@@ -33,6 +33,13 @@ function getAllEpisodeNumbers(novel) {
   return result;
 }
 
+function getContinueEpisodeNumber(novel) {
+  const btn = novel.querySelector("button .novel-btn-continue");
+  if (!btn) return null;
+  const match = btn.textContent.match(/EP\.(\d+)/);
+  return match ? match[1] : null;
+}
+
 (function () {
   "use strict";
   const path = window.location.pathname;
@@ -42,13 +49,12 @@ function getAllEpisodeNumbers(novel) {
       .querySelector(".mybook-data-list-items")
       .querySelectorAll(".novel-list-real-container")
       .forEach((novel) => {
-        // Injecting a new div and span element
         const div = document.createElement("div");
         const span = document.createElement("span");
 
-        const numbers = getAllEpisodeNumbers(novel);
         span.className = "novel-numerical-content";
-        span.textContent = numbers.length > 0 ? numbers[0] : "";
+        // const numbers = getAllEpisodeNumbers(novel);
+        // span.textContent = numbers.length > 0 ? numbers[0] : "";
 
         div.appendChild(span);
         novel.querySelector(".novel-numerical").appendChild(div);
