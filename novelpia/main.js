@@ -13,8 +13,7 @@
 // @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
 // ==/UserScript==
 
-function extractNumberFromNovel(novel) {
-  // .novel-numerical > div > span 2개 중, 하나가 '회차'인 경우 나머지 span의 숫자 추출
+function getAllEpisodeNumbers(novel) {
   const numericalDivs = novel.querySelectorAll(".novel-numerical > div");
   let result = [];
   numericalDivs.forEach((div) => {
@@ -43,13 +42,11 @@ function extractNumberFromNovel(novel) {
       .querySelector(".mybook-data-list-items")
       .querySelectorAll(".novel-list-real-container")
       .forEach((novel) => {
-        novel.querySelectorAll(".novel-numerical");
-
         // Injecting a new div and span element
         const div = document.createElement("div");
         const span = document.createElement("span");
 
-        const numbers = extractNumberFromNovel(novel);
+        const numbers = getAllEpisodeNumbers(novel);
         span.className = "novel-numerical-content";
         span.textContent = numbers.length > 0 ? numbers[0] : "";
 
