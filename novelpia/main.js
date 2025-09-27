@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Novelpia Script
 // @namespace    github:niodtn/scripts/novelpia
-// @version      2025-08-16a
+// @version      2025-09-28
 // @description  Novelpia
 // @author       Niodtn
 // @match        *://novelpia.com/*
@@ -11,6 +11,7 @@
 // @run-at       document-end
 // @downloadURL  https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
 // @updateURL    https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
+// @icon         https://images.novelpia.com/img/favicon/2025-ms-icon-144x144.png
 // ==/UserScript==
 
 function createNovelInfoDiv(title, content) {
