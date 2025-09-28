@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube
 // @namespace    github:niodtn/scripts/youtube
-// @version      2025-09-29
+// @version      2025-09-29a
 // @description  Youtube
 // @author       Niodtn
 // @match        https://www.youtube.com/*
@@ -14,6 +14,21 @@
 // ==/UserScript==
 
 // === 유튜브 메인 페이지 ===
+
+function removeShortsMainPage() {
+  // 쇼츠 제거
+  const sections = document.querySelectorAll("ytd-rich-section-renderer");
+  sections.forEach((el) => el.remove());
+
+  // 20px to 8px
+  const items = document.querySelectorAll("ytd-rich-item-renderer");
+  items.forEach((item) => {
+    const style = window.getComputedStyle(item);
+    if (style.marginLeft === "24px") {
+      item.style.marginLeft = "8px";
+    }
+  });
+}
 
 // === 유튜브 영상 페이지 ===
 
@@ -73,35 +88,21 @@ function moveSecondaryToPrimaryInner() {
 
 (function () {
   "use strict";
-  
-  // 메인 페이지
-  if (location.pathname === "/") {
-    const observer = new MutationObserver(() => {
-      // 쇼츠 제거
-      const sections = document.querySelectorAll("ytd-rich-section-renderer");
-      sections.forEach((el) => el.remove());
 
-      // 20px to 8px
-      const items = document.querySelectorAll("ytd-rich-item-renderer");
-      items.forEach((item) => {
-        const style = window.getComputedStyle(item);
-        if (style.marginLeft === "24px") {
-          item.style.marginLeft = "8px";
-        }
-      });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
+  const observer = new MutationObserver(() => {
+    // 메인 페이지
+    if (location.pathname === "/") {
+      removeShortsMainPage();
+    }
 
-  // 동영상 페이지
-  else if (location.pathname === "/watch") {
-    const observer = new MutationObserver(() => {
+    // 동영상 페이지
+    else if (location.pathname === "/watch") {
       //   removeComments();
       //   moveUpNextToCommentArea();
       //   enableTheaterMode();
       //   removeReelShelves();
       //   moveSecondaryToPrimaryInner();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
 })();
