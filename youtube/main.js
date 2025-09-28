@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Youtube
 // @namespace    github:niodtn/scripts/youtube
-// @version      2025-09-28
+// @version      2025-09-29
 // @description  Youtube
 // @author       Niodtn
 // @match        https://www.youtube.com/*
+// @match        https://m.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
 // @run-at       document-end
@@ -72,11 +73,9 @@ function moveSecondaryToPrimaryInner() {
 
 (function () {
   "use strict";
-
-  const url = window.location.href;
-
+  
   // 메인 페이지
-  if (url === "https://www.youtube.com/") {
+  if (location.pathname === "/") {
     const observer = new MutationObserver(() => {
       // 쇼츠 제거
       const sections = document.querySelectorAll("ytd-rich-section-renderer");
@@ -95,7 +94,7 @@ function moveSecondaryToPrimaryInner() {
   }
 
   // 동영상 페이지
-  else if (url.includes("watch?v=")) {
+  else if (location.pathname === "/watch") {
     const observer = new MutationObserver(() => {
       //   removeComments();
       //   moveUpNextToCommentArea();
