@@ -4,13 +4,17 @@
 // @version      2025-09-28
 // @description  Youtube
 // @author       Niodtn
-// @match        https://www.youtube.com/watch?v=*
+// @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
 // @run-at       document-end
 // @downloadURL  https://niodtn.github.io/scripts/youtube/main.js
 // @updateURL    https://niodtn.github.io/scripts/youtube/main.js
 // ==/UserScript==
+
+// === 유튜브 메인 페이지 ===
+
+// === 유튜브 영상 페이지 ===
 
 // 댓글 지우기
 function removeComments() {
@@ -64,15 +68,31 @@ function moveSecondaryToPrimaryInner() {
   }
 }
 
+// ==========================
+
 (function () {
   "use strict";
 
-  const observer = new MutationObserver(() => {
-    removeComments();
-    moveUpNextToCommentArea();
-    enableTheaterMode();
-    removeReelShelves();
-    moveSecondaryToPrimaryInner();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
+  const url = window.location.href;
+
+  // 메인 페이지
+  if (url === "https://www.youtube.com/") {
+    const observer = new MutationObserver(() => {
+      const sections = document.querySelectorAll("ytd-rich-section-renderer");
+      sections.forEach((el) => el.remove());
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // 동영상 페이지
+  else if (url.includes("watch?v=")) {
+    const observer = new MutationObserver(() => {
+      //   removeComments();
+      //   moveUpNextToCommentArea();
+      //   enableTheaterMode();
+      //   removeReelShelves();
+      //   moveSecondaryToPrimaryInner();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 })();
