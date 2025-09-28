@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube
 // @namespace    github:niodtn/scripts/youtube
-// @version      2025-09-29a
+// @version      2025-09-29b
 // @description  Youtube
 // @author       Niodtn
 // @match        https://www.youtube.com/*
@@ -17,11 +17,15 @@
 
 function removeShortsMainPage() {
   // 쇼츠 제거
-  const sections = document.querySelectorAll("ytd-rich-section-renderer");
+  const sections = document.querySelectorAll(
+    "ytd-rich-section-renderer, ytm-rich-section-renderer"
+  );
   sections.forEach((el) => el.remove());
 
   // 20px to 8px
-  const items = document.querySelectorAll("ytd-rich-item-renderer");
+  const items = document.querySelectorAll(
+    "ytd-rich-item-renderer, ytm-rich-item-renderer"
+  );
   items.forEach((item) => {
     const style = window.getComputedStyle(item);
     if (style.marginLeft === "24px") {
