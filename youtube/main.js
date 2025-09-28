@@ -78,8 +78,18 @@ function moveSecondaryToPrimaryInner() {
   // 메인 페이지
   if (url === "https://www.youtube.com/") {
     const observer = new MutationObserver(() => {
+      // 쇼츠 제거
       const sections = document.querySelectorAll("ytd-rich-section-renderer");
       sections.forEach((el) => el.remove());
+
+      // 20px to 8px
+      const items = document.querySelectorAll("ytd-rich-item-renderer");
+      items.forEach((item) => {
+        const style = window.getComputedStyle(item);
+        if (style.marginLeft === "24px") {
+          item.style.marginLeft = "8px";
+        }
+      });
     });
     observer.observe(document.body, { childList: true, subtree: true });
   }
