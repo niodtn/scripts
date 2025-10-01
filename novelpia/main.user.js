@@ -10,8 +10,8 @@
 // @icon         https://images.novelpia.com/img/favicon/2025-ms-icon-144x144.png
 // @grant        none
 // @run-at       document-end
-// @downloadURL  https://niodtn.github.io/scripts/novelpia/main.js
-// @updateURL    https://niodtn.github.io/scripts/novelpia/main.js
+// @downloadURL  https://niodtn.github.io/scripts/novelpia/main.user.js
+// @updateURL    https://niodtn.github.io/scripts/novelpia/main.user.js
 // ==/UserScript==
 
 function createNovelInfoDiv(title, content) {
