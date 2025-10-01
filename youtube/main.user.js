@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube
 // @namespace    github:niodtn/scripts/youtube
-// @version      2025-09-29b
+// @version      2025-10-02
 // @description  Youtube
 // @author       Niodtn
 // @match        https://www.youtube.com/*
@@ -9,8 +9,8 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
 // @run-at       document-end
-// @downloadURL  https://niodtn.github.io/scripts/youtube/main.js
-// @updateURL    https://niodtn.github.io/scripts/youtube/main.js
+// @downloadURL  https://niodtn.github.io/scripts/youtube/main.user.js
+// @updateURL    https://niodtn.github.io/scripts/youtube/main.user.js
 // ==/UserScript==
 
 // === 유튜브 메인 페이지 ===
@@ -20,9 +20,9 @@ function removeShortsMainPage() {
   const sections = document.querySelectorAll(
     "ytd-rich-section-renderer, ytm-rich-section-renderer"
   );
-  sections.forEach((el) => el.remove());
+  sections.forEach((el) => (el.style.display = "none"));
 
-  // 20px to 8px
+  // 24px to 8px
   const items = document.querySelectorAll(
     "ytd-rich-item-renderer, ytm-rich-item-renderer"
   );

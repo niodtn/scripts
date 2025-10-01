@@ -7,11 +7,11 @@
 // @match        *://novelpia.com/*
 // @match        *://*.novelpia.com/*
 // @match        *://www.novelpia.com/*
+// @icon         https://images.novelpia.com/img/favicon/2025-ms-icon-144x144.png
 // @grant        none
 // @run-at       document-end
-// @downloadURL  https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
-// @updateURL    https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/novelpia/main.js
-// @icon         https://images.novelpia.com/img/favicon/2025-ms-icon-144x144.png
+// @downloadURL  https://niodtn.github.io/scripts/novelpia/main.js
+// @updateURL    https://niodtn.github.io/scripts/novelpia/main.js
 // ==/UserScript==
 
 function createNovelInfoDiv(title, content) {

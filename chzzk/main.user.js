@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name        Chzzk Helpful Script
 // @namespace   github:niodtn/scripts/chzzk
+// @version     2025-10-02
+// @description Chzzk Custom
+// @author      Niodtn
 // @match       *://chzzk.naver.com/live/*
 // @grant       none
-// @version     1.0.1
-// @author      Niodtn
 // @run-at      document-end
-// @description Chzzk Custom
-// @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/chzzk/main.js
-// @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/chzzk/main.js
+// @downloadURL https://niodtn.github.io/scripts/chzzk/main.user.js
+// @updateURL   https://niodtn.github.io/scripts/chzzk/main.user.js
 // ==/UserScript==
 
 function findAndRun(func, target) {

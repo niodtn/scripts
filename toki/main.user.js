@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name        Toki autoHide
 // @namespace   github:niodtn/scripts/toki
+// @version     2025-10-02
+// @description Personal Tampermonkey script to filter content on newtoki.com
+// @author      Niodtn
 // @include     /https:\/\/\w*toki\d*.(com|net)\/.*/
 // @grant       none
-// @version     1.4.0
-// @author      Niodtn
-// @description Personal Tampermonkey script to filter content on newtoki.com
 // @run-at      document-end
-// @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/main.js
-// @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/toki/main.js
+// @downloadURL https://niodtn.github.io/scripts/toki/main.user.js
+// @updateURL   https://niodtn.github.io/scripts/toki/main.user.js
 // ==/UserScript==
 
 async function getList(url) {

@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name        Arca Live Base64 Auto Decoder
 // @namespace   github:niodtn/scripts/arcalive
+// @version     2025-10-02
+// @description 아카라이브 Base64로 인코딩된 링크를 자동으로 디코딩
+// @author      Niodtn
 // @match       *://arca.live/b/*
 // @grant       none
-// @version     1.0.1
-// @author      Niodtn
-// @description 아카라이브 Base64로 인코딩된 링크를 자동으로 디코딩
 // @run-at      document-end
-// @downloadURL https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/arcalive/main.js
-// @updateURL   https://raw.githubusercontent.com/niodtn/scripts/refs/heads/main/arcalive/main.js
+// @downloadURL https://niodtn.github.io/scripts/arcalive/main.user.js
+// @updateURL   https://niodtn.github.io/scripts/arcalive/main.user.js
 // ==/UserScript==
 
 const urlPattern = /https?:\/\//g;
