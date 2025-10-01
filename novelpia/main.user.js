@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Novelpia Script
 // @namespace    github:niodtn/scripts/novelpia
-// @version      2025-09-28
+// @version      2025-10-02
 // @description  Novelpia
 // @author       Niodtn
 // @match        *://novelpia.com/*
