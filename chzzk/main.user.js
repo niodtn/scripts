@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chzzk Helpful Script
 // @namespace    github:niodtn/scripts/chzzk
-// @version      2025-10-03
+// @version      2025-10-04
 // @description  Chzzk Custom
 // @author       Niodtn
 // @match        https://chzzk.naver.com/*
@@ -13,7 +13,10 @@
 // ==/UserScript==
 
 function addcss() {
-  const imgs = document.querySelectorAll('img[alt="채팅 운영자"]');
+  const imgs = document.querySelectorAll(
+    'img[alt="채팅 운영자"], img[alt="채널 관리자"]'
+  );
+
   imgs.forEach((img) => {
     const parent = img.closest(
       'div[class^="live_chatting_message_chatting_message"]'
