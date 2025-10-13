@@ -14,35 +14,47 @@
 // ==/UserScript==
 
 function highlightChat() {
-  const userSelector = 'img[alt="채팅 운영자"], img[alt="채널 관리자"]';
-  const chatParentSelector =
-    'div[class^="live_chatting_message_chatting_message"]';
+  const followingNames = GM_getValue("following_channel_names", []);
+  const msgSelector = 'div[class^="live_chatting_message_chatting_message"]';
 
-  document.querySelectorAll(userSelector).forEach((img) => {
-    const chatMessage = img.closest(chatParentSelector);
+  document.querySelectorAll(msgSelector).forEach((msg) => {
+    // If CSS has already been applied, skip
+    if (msg.dataset.cssApplied) return;
 
-    // If chatMessage is not found or CSS has already been applied, skip
-    if (!chatMessage || chatMessage.dataset.cssApplied) return;
+    // nickname extraction
+    const nicknameSelector = 'span[class^="name_text__"]';
+    const nickname = msg.querySelector(nicknameSelector)?.textContent.trim();
 
-    // 1. Apply background styles
-    chatMessage.style.cssText = `
-      background-color: #749ffe;
-      border-radius: 7px;
-    `;
+    const adminIconSelector = 'img[alt="채팅 운영자"], img[alt="채널 관리자"]';
+    const isAdmin = msg.querySelector(adminIconSelector) !== null;
+    const isFollowing = nickname && followingNames.includes(nickname);
 
-    // 2. Change nickname color
-    const nickname = chatMessage.querySelector(
-      'span[class^="live_chatting_username_nickname"]'
-    );
-    if (nickname) nickname.style.color = "#fff";
+    const textElementsSelector =
+      'span[class^="live_chatting_username_nickname"], span[class^="live_chatting_message_text"]';
 
-    const messageText = chatMessage.querySelector(
-      'span[class^="live_chatting_message_text"]'
-    );
-    if (messageText) messageText.style.color = "#fff";
-
-    // 3. Mark that CSS has been applied
-    chatMessage.dataset.cssApplied = "true";
+    if (isAdmin) {
+      // 1. Apply background styles
+      msg.style.cssText = `
+        background-color: #749ffe;
+        border-radius: 7px;
+        `;
+      // 2. Change text color
+      msg.querySelectorAll(textElementsSelector).forEach((element) => {
+        element.style.color = "#fff";
+      });
+    } else if (isFollowing) {
+      // 1. Apply background styles
+      msg.style.cssText = `
+          background-color: #d9b04f;
+          border-radius: 7px;
+        `;
+      // 2. Change text color
+      msg.querySelectorAll(textElementsSelector).forEach((element) => {
+        element.style.color = "#fff";
+      });
+    }
+    // Mark that CSS has been applied
+    msg.dataset.cssApplied = "true";
   });
 }
 
