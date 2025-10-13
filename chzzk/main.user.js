@@ -14,36 +14,35 @@
 // ==/UserScript==
 
 function highlightChat() {
-  const imgs = document.querySelectorAll(
-    'img[alt="채팅 운영자"], img[alt="채널 관리자"]'
-  );
+  const userSelector = 'img[alt="채팅 운영자"], img[alt="채널 관리자"]';
+  const chatParentSelector =
+    'div[class^="live_chatting_message_chatting_message"]';
 
-  imgs.forEach((img) => {
-    const parent = img.closest(
-      'div[class^="live_chatting_message_chatting_message"]'
-    );
+  document.querySelectorAll(userSelector).forEach((img) => {
+    const chatMessage = img.closest(chatParentSelector);
 
-    if (!parent) return;
-    if (parent.dataset.cssApplied) return;
+    // If chatMessage is not found or CSS has already been applied, skip
+    if (!chatMessage || chatMessage.dataset.cssApplied) return;
 
-    // background
-    parent.style.backgroundColor = "#749ffe";
-    parent.style.borderRadius = "7px";
-    parent.style.backgroundColor;
+    // 1. Apply background styles
+    chatMessage.style.cssText = `
+      background-color: #749ffe;
+      border-radius: 7px;
+    `;
 
-    // nickname
-    const nickname = parent.querySelector(
+    // 2. Change nickname color
+    const nickname = chatMessage.querySelector(
       'span[class^="live_chatting_username_nickname"]'
     );
-    nickname.style.color = "#fff";
+    if (nickname) nickname.style.color = "#fff";
 
-    // message
-    const messageText = parent.querySelector(
+    const messageText = chatMessage.querySelector(
       'span[class^="live_chatting_message_text"]'
     );
-    messageText.style.color = "#fff";
+    if (messageText) messageText.style.color = "#fff";
 
-    parent.dataset.cssApplied = "true";
+    // 3. Mark that CSS has been applied
+    chatMessage.dataset.cssApplied = "true";
   });
 }
 
