@@ -6,7 +6,8 @@
 // @author       Niodtn
 // @match        https://chzzk.naver.com/*
 // @icon         https://ssl.pstatic.net/static/nng/glive/icon/favicon.png
-// @grant        none
+// @grant        GM_getValue
+// @grant        GM_setValue
 // @run-at       document-end
 // @downloadURL  https://niodtn.github.io/scripts/chzzk/main.user.js
 // @updateURL    https://niodtn.github.io/scripts/chzzk/main.user.js
@@ -46,11 +47,6 @@ function addcss() {
   });
 }
 
-function hideElement(target) {
-  const _target = document.querySelector(target);
-  if (_target) _target.style.display = "none";
-}
-
 function chatting() {
   const inputContainer = document.querySelector(
     'div[class^="live_chatting_input_container"]'
@@ -66,6 +62,33 @@ function chatting() {
     area.style.justifyContent = "center";
     area.style.alignItems = "center";
     area.style.minHeight = "auto";
+  }
+}
+
+function test() {
+  // Find "팔로잉 채널" navigation element
+  const foundElement = Array.from(document.querySelectorAll("strong")).find(
+    (element) => element.textContent.trim() === "팔로잉 채널"
+  );
+  const nav = foundElement?.closest("nav");
+  if (!nav) return;
+
+  // Add click event listener to the button with aria-label "더보기"
+  const targetButton = nav.querySelector("button[aria-label='더보기']");
+  if (targetButton) {
+    if (targetButton.dataset.listenerAdded) return; // Prevent adding multiple listeners
+    targetButton.addEventListener("click", () => {
+      if (targetButton.textContent.trim() === "접기") {
+        const selector = "span[class^='name_text__']";
+        const channelNameElements = nav.querySelectorAll(selector);
+
+        const names = Array.from(channelNameElements)
+          .map((el) => el.textContent.trim())
+          .filter((name) => name.length > 0);
+        GM_setValue("following_channel_names", names);
+      }
+    });
+    targetButton.dataset.listenerAdded = "true"; // Mark that listener has been added
   }
 }
 
