@@ -13,7 +13,7 @@
 // @updateURL    https://niodtn.github.io/scripts/chzzk/main.user.js
 // ==/UserScript==
 
-function addcss() {
+function highlightChat() {
   const imgs = document.querySelectorAll(
     'img[alt="채팅 운영자"], img[alt="채널 관리자"]'
   );
@@ -47,7 +47,7 @@ function addcss() {
   });
 }
 
-function chatting() {
+function hideChatInput() {
   const inputContainer = document.querySelector(
     'div[class^="live_chatting_input_container"]'
   );
@@ -65,7 +65,7 @@ function chatting() {
   }
 }
 
-function test() {
+function saveFollowingChannelNames() {
   // Find "팔로잉 채널" navigation element
   const foundElement = Array.from(document.querySelectorAll("strong")).find(
     (element) => element.textContent.trim() === "팔로잉 채널"
@@ -96,12 +96,13 @@ function test() {
   "use strict";
 
   const observer = new MutationObserver(() => {
+    saveFollowingChannelNames();
     if (
       location.pathname.startsWith("/live") ||
       location.pathname.startsWith("/video")
     ) {
-      addcss();
-      chatting();
+      highlightChat();
+      hideChatInput();
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
