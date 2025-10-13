@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chzzk Helpful Script
 // @namespace    github:niodtn/scripts/chzzk
-// @version      2025-10-04
+// @version      2025-10-14
 // @description  Chzzk Custom
 // @author       Niodtn
 // @match        https://chzzk.naver.com/*
