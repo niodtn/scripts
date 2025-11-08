@@ -16,6 +16,8 @@
 // @require      https://niodtn.github.io/scripts/novelpia/mybook.js
 // ==/UserScript==
 
+/* global PageDispatcher, mybook */
+
 (function () {
   "use strict";
   const dispatcher = new PageDispatcher();
