@@ -24,6 +24,8 @@ function mybook() {
   /** 마지막으로 읽은 회차 숫자 가져오기 */
   function lastReadEpisode(novel) {
     const continueButton = novel.querySelector("button.novel-btn-continue");
+    if (!continueButton) return null;
+
     const number = continueButton.textContent.trim().replace(/[^0-9]/g, ""); // replace -> 숫자 제외 전부 제거
     return number;
   }
@@ -49,10 +51,11 @@ function mybook() {
     ?.querySelectorAll(".novel-list-real-container")
     .forEach((novel) => {
       const lastRead = lastReadEpisode(novel);
-      const lastest = latestEpisode(novel);
+      const latest = latestEpisode(novel);
+      if (!lastRead) return;
 
-      const remain = lastest - lastRead;
-      const percent = Math.floor((lastRead / lastest) * 100);
+      const remain = latest - lastRead;
+      const percent = Math.floor((lastRead / latest) * 100);
 
       const remainDiv = createNovelInfoDiv("남은 회차", ` ${remain}`);
       const percentDiv = createNovelInfoDiv("진도", ` ${percent}%`);
