@@ -99,8 +99,8 @@ class _novel {
 
     for (const e of badge.children) {
       const text = e.innerText.trim();
-      if (text === "연재 중단" || text === "연재 지연") {
-        return true; // 찾았으니 함수 전체 종료 및 true 반환
+      if (text === "연재중단" || text === "연재지연") {
+        return true;
       }
     }
     return false;
