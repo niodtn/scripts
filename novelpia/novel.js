@@ -11,6 +11,7 @@ class _novel {
     console.debug("태그:", this.getTags());
     console.debug("마지막 회차:", this.getLatestEpisode());
     console.debug("마지막으로 읽은 회차:", this.getLastReadEpisode());
+    console.debug("연재 지연/중단:", this.getStopped());
 
     if (this.getLastReadEpisode()) this.spreadsheet();
     else return;
@@ -91,6 +92,20 @@ class _novel {
     return match ? match[1] : null;
   }
 
+  /** 연재 중단 또는 지연 여부 **/
+  getStopped() {
+    const badge = document.querySelector(".in-badge");
+    if (!badge) return false;
+
+    for (const e of badge.children) {
+      const text = e.innerText.trim();
+      if (text === "연재 중단" || text === "연재 지연") {
+        return true; // 찾았으니 함수 전체 종료 및 true 반환
+      }
+    }
+    return false;
+  }
+
   /** 스프레드시트로 데이터 전송 */
   spreadsheet() {
     const APPS_SCRIPT_URL =
@@ -104,6 +119,7 @@ class _novel {
       isLiked: this.isLike(),
       continueEpisodeNumber: this.getLastReadEpisode(),
       allEpisodeNumber: this.getLatestEpisode(),
+      isStopped: this.getStopped(),
     };
 
     GM.xmlHttpRequest({
