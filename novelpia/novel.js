@@ -12,6 +12,7 @@ class _novel {
     console.debug("마지막 회차:", this.getLatestEpisode());
     console.debug("마지막으로 읽은 회차:", this.getLastReadEpisode());
     console.debug("연재 지연/중단:", this.getStopped());
+    console.debug("완결 여부:", this.getEnded());
 
     if (this.getLastReadEpisode()) this.spreadsheet();
     else return;
@@ -106,6 +107,19 @@ class _novel {
     return false;
   }
 
+  getEnded() {
+    const badge = document.querySelector(".in-badge");
+    if (!badge) return false;
+
+    for (const e of badge.children) {
+      const text = e.innerText.trim();
+      if (text === "완결") {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /** 스프레드시트로 데이터 전송 */
   spreadsheet() {
     const APPS_SCRIPT_URL =
@@ -120,6 +134,7 @@ class _novel {
       continueEpisodeNumber: this.getLastReadEpisode(),
       allEpisodeNumber: this.getLatestEpisode(),
       isStopped: this.getStopped(),
+      isEnded: this.getEnded(),
     };
 
     GM.xmlHttpRequest({
