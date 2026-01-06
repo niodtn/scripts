@@ -123,7 +123,7 @@ class _novel {
   /** 스프레드시트로 데이터 전송 */
   spreadsheet() {
     const APPS_SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbwsI6Fah7OaeRhkSjsp65leY2SYpdVquf4GBH8xxXY7dNqsHn8HskCuR_XXyIja-rfU/exec";
+      "https://script.google.com/macros/s/AKfycbzV3FKPeE6LRFZCMfEiMjRjGe4fIDx775HZ0ECUiOLy/dev";
 
     const novelData = {
       id: this.getId(),
