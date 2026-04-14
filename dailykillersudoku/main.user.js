@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         My Sudoku Script
-// @namespace   github:niotn/scripts/dailykillersudoku
-// @version      2026-04-15
-// @description  Grid
+// @namespace    github:niotn/scripts/dailykillersudoku
+// @version      2026-04-15b
+// @description  Grid Layout for Pencil Marks
 // @author       Niodtn
 // @match        https://www.dailykillersudoku.com/puzzle/*
 // @match        https://www.dailykillersudoku.com/m/puzzle/*
@@ -40,43 +40,46 @@ function applyGrid(cell) {
   "use strict";
 
   GM_addStyle(`
-        .pencil-marks {
-            /* override */
-            color: transparent !important;
-            display: grid !important;
-            top: 0%;
+    .pencil-marks {
+      /* override */
+      color: transparent !important;
+      display: grid !important;
+      top: 0% !important;
 
-            /* grid */
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            width: 100% !important;
-            height: 100% !important;
+      /* grid layout */
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      width: 100% !important;
+      height: 100% !important;
 
-            /* etc */
-            padding: 20px 4px 8px 4px !important;
-        }
+      /* spacing */
+      padding: 20px 4px 8px 4px !important;
+      box-sizing: border-box !important;
+    }
 
-        .grid-num {
-            font-weight: bold;
-            font-size: 60% !important;
+    .grid-num {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 60% !important;
+      color: #363686 !important;
+      line-height: 1 !important;
+    }
 
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-
-            color: #363686 !important;
-            line-height: 1 !important;
-        }
-    `);
+    :root.dark-mode .grid-num {
+      color: #eef !important;
+    }
+  `);
 
   const dispatcher = new PageDispatcher(true);
 
-  dispatcher.register("/puzzle", () => {
+  const handler = () => {
     document.querySelectorAll(".pencil-marks").forEach(applyGrid);
-  });
-  dispatcher.register("/m/puzzle", () => {
-    document.querySelectorAll(".pencil-marks").forEach(applyGrid);
-  });
+  };
+
+  dispatcher.register("/puzzle", handler);
+  dispatcher.register("/m/puzzle", handler);
 
   dispatcher.start();
 })();
