@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         My Sudoku Script
 // @namespace    github:niotn/scripts/dailykillersudoku
-// @version      2026-04-15b
+// @version      2026-04-15c
 // @description  Grid Layout for Pencil Marks
 // @author       Niodtn
 // @match        https://www.dailykillersudoku.com/puzzle/*
@@ -53,7 +53,7 @@ function applyGrid(cell) {
       height: 100% !important;
 
       /* spacing */
-      padding: 20px 4px 8px 4px !important;
+      padding: 30% 4px 8px 4px !important;
       box-sizing: border-box !important;
     }
 
